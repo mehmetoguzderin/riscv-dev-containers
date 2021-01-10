@@ -10,14 +10,14 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 RUN git clone https://github.com/riscv/riscv-gnu-toolchain \
     && cd ./riscv-gnu-toolchain \
-    && ./configure --prefix=$RISCV --enable-multilib && make
-
-RUN git clone https://github.com/riscv/riscv-pk \
-    && cd ./riscv-pk && mkdir build && cd build \
-    && ../configure --prefix=$RISCV --host=riscv64-unknown-elf \
-    && make && make install
+    && ./configure --prefix=${RISCV} --enable-multilib && make
 
 RUN git clone https://github.com/riscv/riscv-isa-sim \
     && cd ./riscv-isa-sim && mkdir build && cd build \
-    && ../configure --prefix=$RISCV \
+    && ../configure --prefix=${RISCV} \
+    && make && make install
+
+RUN git clone https://github.com/riscv/riscv-pk \
+    && cd ./riscv-pk && mkdir build && cd build \
+    && ../configure --prefix=${RISCV} --host=riscv64-unknown-elf \
     && make && make install
